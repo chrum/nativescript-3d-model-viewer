@@ -1,0 +1,10 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page"
+      xmlns:mv="@chrum/nativescript-3d-model-viewer">
+    <Page.actionBar>
+        <ActionBar title="nativescript-3d-model-viewer" icon="" class="action-bar">
+        </ActionBar>
+    </Page.actionBar>
+    <GridLayout rows="*" columns="*">
+        <mv:ModelViewer col="0" row="0"></mv:ModelViewer>
+    </GridLayout>
+</Page>

@@ -55,13 +55,20 @@ module.exports = {
       },
     },
     '⚙️': {
-      script: `npx cowsay "@nativescript/* packages will keep your ⚙️ cranking"`,
-      description: '_____________  @nativescript/*  _____________',
+      script: `npx cowsay "@chrum/* packages will keep your ⚙️ cranking"`,
+      description: '_____________  @chrum/*  _____________',
     },
     // packages
     // build output is always in dist/packages
-    '@nativescript': {
-      'build-all': {
+    '@chrum': {
+      // @chrum/nativescript-3d-model-viewer
+			'nativescript-3d-model-viewer': {
+				build: {
+					script: 'nx run nativescript-3d-model-viewer:build.all',
+					description: '@chrum/nativescript-3d-model-viewer: Build',
+				},
+			},
+			'build-all': {
         script: 'nx run-many --target=build.all --all',
         description: 'Build all packages',
       },
@@ -71,8 +78,12 @@ module.exports = {
       description: '_____________  Focus (VS Code supported)  _____________',
     },
     focus: {
-      reset: {
-        script: 'nx g @nativescript/plugin-tools:focus-packages',
+      'nativescript-3d-model-viewer': {
+				script: 'nx run nativescript-3d-model-viewer:focus',
+				description: 'Focus on @chrum/nativescript-3d-model-viewer',
+			},
+			reset: {
+        script: 'nx g @chrum/plugin-tools:focus-packages',
         description: 'Reset Focus',
       },
     },
