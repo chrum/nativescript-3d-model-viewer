@@ -8,6 +8,10 @@ npm install @chrum/nativescript-3d-model-viewer
 
 // TODO
 
+## Credits
+
+- Android rotations thanks to https://github.com/chnouman/SceneView
+
 ## License
 
 Apache License Version 2.0

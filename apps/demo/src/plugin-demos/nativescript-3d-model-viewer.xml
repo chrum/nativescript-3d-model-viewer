@@ -5,6 +5,8 @@
         </ActionBar>
     </Page.actionBar>
     <GridLayout rows="*" columns="*">
-        <mv:ModelViewer col="0" row="0"></mv:ModelViewer>
+        <mv:ModelViewer col="0" row="0"
+            modelPath="chrum.glb"
+            bgColor="#14121d"></mv:ModelViewer>
     </GridLayout>
 </Page>

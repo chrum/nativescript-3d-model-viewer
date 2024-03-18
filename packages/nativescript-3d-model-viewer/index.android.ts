@@ -1,9 +1,6 @@
 import { ModelViewerCommon, bgColorProperty, modelPathProperty } from './common';
 import { AndroidApplication, Application } from '@nativescript/core';
 
-declare const com: any;
-declare const it: any;
-
 export class ModelViewer extends ModelViewerCommon {
     private _sceneView;
     private _modelPath: string;
@@ -16,14 +13,14 @@ export class ModelViewer extends ModelViewerCommon {
     set bgColor(value: string) {
         if (value) {
             this._bgColor = value;
-            this._setSceneviewBackgroungColor(this._bgColor)
+            this._setSceneviewBackgroundColor();
         }
     }
 
     set modelPath(value: string) {
         if (value && this._modelPath !== value) {
             this._modelPath = value;
-            this._setSceneviewBackgroungColor(this._modelPath)
+            this._loadModel();
         }
     }
 
@@ -56,7 +53,7 @@ export class ModelViewer extends ModelViewerCommon {
 
     onLoaded() {
         super.onLoaded();
-        this._setSceneviewBackgroungColor(this._bgColor);
+        this._setSceneviewBackgroundColor();
         // const white = android.graphics.Color.parseColor('#009a9e');
 
         this._sceneView.resume();
@@ -64,18 +61,23 @@ export class ModelViewer extends ModelViewerCommon {
         this._loadModel();
     }
 
+    disposeNativeView() {
+        super.disposeNativeView();
+        if (this._sceneView) {
+            this._sceneView.destroy();
+        }
+    }
+
     private _loadModel() {
-        if (!this._modelPath) {
-            console.log('No model to load');
+        if (!this._modelPath || !this._sceneView) {
             return;
         }
-        const modelName = 'chrum.glb';
-        const modelSrc = android.net.Uri.parse(modelName);
+
+        const modelSrc = android.net.Uri.parse(this._modelPath);
 
         com.google.ar.sceneform.rendering.ModelRenderable.builder()
             .setSource(this._context, modelSrc)
-            .setRegistryId(modelName)
-            /* @ts-ignore:line */
+            .setRegistryId(this._modelPath)
             .setIsFilamentGltf(true)
             .build()
             /* @ts-ignore:line */
@@ -87,33 +89,37 @@ export class ModelViewer extends ModelViewerCommon {
             /* @ts-ignore:line */
             .exceptionally(new java.util.function.Function({
                 apply: error => {
-                    console.error('failed loading \'' + modelName + '\': ' + error);
+                    console.error('failed loading \'' + this._modelPath + '\': ' + error);
                 }
             }));
     }
 
-    private _setSceneviewBackgroungColor(color: string) {
+    private _setSceneviewBackgroundColor() {
         if (this._sceneView) {
-            const parsed = android.graphics.Color.parseColor(color);
-            const colorToSet = new com.google.ar.sceneform.rendering.Color(parsed);
-            this._sceneView
-                .getRenderer()
-                .setClearColor(colorToSet);
+            try {
+                const parsed = android.graphics.Color.parseColor(this._bgColor);
+                const colorToSet = new com.google.ar.sceneform.rendering.Color(parsed);
+                this._sceneView
+                    .getRenderer()
+                    .setClearColor(colorToSet);
+
+            } catch(e) {
+                console.error('Problem with color', this._bgColor);
+            }
         }
     }
 
-    private _onModelLoaded(renderable) {
-        const transformationSystem = this._makeTranformationSystem();
-
-
+    private _onModelLoaded(renderable: com.google.ar.sceneform.rendering.Renderable) {
+        const transformationSystem = this._makeTransformationSystem();
         const node = new it.chrum.sceneview.nodes.DragTransformableNode(1, transformationSystem);
 
-        this._sceneView.getScene().addChild(node);
+        this._sceneView.getScene()
+            .addChild(node);
+
         node.setRenderable(renderable);
         node.select();
 
         const listener = new com.google.ar.sceneform.Scene.OnPeekTouchListener({
-            /* @ts-ignore:line */
             onPeekTouch: (hitTestResult: com.google.ar.sceneform.HitTestResult, motionEvent: android.view.MotionEvent) => {
                 transformationSystem.onTouch(
                     hitTestResult,
@@ -123,12 +129,11 @@ export class ModelViewer extends ModelViewerCommon {
         });
 
 
-        this._sceneView.getScene().addOnPeekTouchListener(listener);
-
-
+        this._sceneView.getScene()
+            .addOnPeekTouchListener(listener);
     }
 
-    private _makeTranformationSystem() {
+    private _makeTransformationSystem() {
         const footprintSelectionVisualizer = new com.google.ar.sceneform.ux.FootprintSelectionVisualizer();
         const androidApp: AndroidApplication = Application.android;
         const displayMetrics = androidApp.foregroundActivity.getResources().getDisplayMetrics();
