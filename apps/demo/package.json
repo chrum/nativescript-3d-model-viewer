@@ -5,7 +5,8 @@
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "@nativescript/core": "file:../../node_modules/@nativescript/core",
-    "@chrum/nativescript-3d-model-viewer": "file:../../packages/nativescript-3d-model-viewer"
+    "@chrum/nativescript-3d-model-viewer": "file:../../packages/nativescript-3d-model-viewer",
+    "@chrum/nativescript-ar-model-viewer": "file:../../packages/nativescript-ar-model-viewer"
   },
   "devDependencies": {
     "@nativescript/android": "~8.6.0",

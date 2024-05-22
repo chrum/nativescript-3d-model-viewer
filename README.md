@@ -1,11 +1,5 @@
-# @chrum/\* plugins
-
-```
-npm run setup
-npm start
-```
-
 - [@chrum/nativescript-3d-model-viewer](packages/nativescript-3d-model-viewer/README.md)
+- [@chrum/nativescript-ar-model-viewer](packages/nativescript-ar-model-viewer/README.md)
 
 # How to use?
 

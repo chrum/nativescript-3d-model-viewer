@@ -1,0 +1,73 @@
+{
+  "name": "nativescript-ar-model-viewer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/nativescript-ar-model-viewer",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "options": {
+        "outputPath": "dist/packages/nativescript-ar-model-viewer",
+        "tsConfig": "packages/nativescript-ar-model-viewer/tsconfig.json",
+        "packageJson": "packages/nativescript-ar-model-viewer/package.json",
+        "main": "packages/nativescript-ar-model-viewer/index.d.ts",
+        "assets": [
+          "packages/nativescript-ar-model-viewer/*.md",
+          "packages/nativescript-ar-model-viewer/index.d.ts",
+          "LICENSE",
+          {
+            "glob": "**/*",
+            "input": "packages/nativescript-ar-model-viewer/platforms/",
+            "output": "./platforms/"
+          }
+        ],
+        "dependsOn": [
+          {
+            "target": "build.all",
+            "projects": "dependencies"
+          }
+        ]
+      }
+    },
+    "build.all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node tools/scripts/build-finish.ts nativescript-ar-model-viewer"
+        ],
+        "parallel": false
+      },
+      "outputs": [
+        "dist/packages/nativescript-ar-model-viewer"
+      ],
+      "dependsOn": [
+        {
+          "target": "build.all",
+          "projects": "dependencies"
+        },
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ]
+    },
+    "focus": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx g @nativescript/plugin-tools:focus-packages nativescript-ar-model-viewer"
+        ],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/nativescript-ar-model-viewer/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

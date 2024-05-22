@@ -68,6 +68,13 @@ module.exports = {
 					description: '@chrum/nativescript-3d-model-viewer: Build',
 				},
 			},
+			// @chrum/nativescript-ar-model-viewer
+			'nativescript-ar-model-viewer': {
+				build: {
+					script: 'nx run nativescript-ar-model-viewer:build.all',
+					description: '@chrum/nativescript-ar-model-viewer: Build',
+				},
+			},
 			'build-all': {
         script: 'nx run-many --target=build.all --all',
         description: 'Build all packages',
@@ -81,6 +88,10 @@ module.exports = {
       'nativescript-3d-model-viewer': {
 				script: 'nx run nativescript-3d-model-viewer:focus',
 				description: 'Focus on @chrum/nativescript-3d-model-viewer',
+			},
+			'nativescript-ar-model-viewer': {
+				script: 'nx run nativescript-ar-model-viewer:focus',
+				description: 'Focus on @chrum/nativescript-ar-model-viewer',
 			},
 			reset: {
         script: 'nx g @chrum/plugin-tools:focus-packages',

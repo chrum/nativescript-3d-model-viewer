@@ -1,0 +1,16 @@
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
+
+android {
+    // useKotlin=true
+}
+dependencies {
+    // Describe plugin native Android dependencies like
+	implementation 'com.gorisse.thomas.sceneform:sceneform:1.23.0'
+}

@@ -31,6 +31,9 @@
       ],
       "@chrum/nativescript-3d-model-viewer": [
         "packages/nativescript-3d-model-viewer/index.d.ts"
+      ],
+      "@chrum/nativescript-ar-model-viewer": [
+        "packages/nativescript-ar-model-viewer/index.d.ts"
       ]
     }
   },

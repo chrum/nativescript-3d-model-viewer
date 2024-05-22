@@ -7,7 +7,12 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 	demos = [
 	{
-		name: 'nativescript-3d-model-viewer'
+		name: '3D',
+        link: 'nativescript-3d-model-viewer'
+	},
+	{
+		name: 'AR',
+        link: 'nativescript-ar-model-viewer'
 	}
 ];
 }

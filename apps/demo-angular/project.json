@@ -9,9 +9,9 @@
             "executor": "@nativescript/nx:build",
             "options": {
                 "noHmr": true,
-                "production": true,
-                "uglify": true,
-                "release": true,
+                "production": false,
+                "uglify": false,
+                "release": false,
                 "forDevice": true
             },
             "dependsOn": [
